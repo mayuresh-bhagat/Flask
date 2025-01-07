@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block title %}Page 2{% endblock title %} {% block
+content %}
+<h1>Hello, World!</h1>
+
+<!-- variable form app.py-->
+<p>{{ name }}</p>
+<p>{{ age }}</p>
+
+<!-- printing list using for loop -->
+<ul>
+  {% for i in mylist %}
+  <li>{{ i }}</li>
+  {% endfor %}
+</ul>
+
+<!-- if statement -->
+{% if age >= 18 %}
+<p>Eligiable for voting</p>
+{% else %}
+<p>Not Eligiable for voting</p>
+{% endif %} 
+<a href="{{ url_for('page1') }}">Page 1</p> 
+{% endblock content %}

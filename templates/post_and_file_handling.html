@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block title %}Index Page{% endblock title %} {%
+block content %}
+<h1>Hello World</h1>
+
+<form method="POST" action="{{ url_for('index')}}">
+  <input type="text" name="username" placeholder="Enter your name" />
+  <input type="password" name="password" placeholder="Enter your password" />
+  <input type="submit" value="Submit" />
+</form>
+
+<h1>File Upload</h1>
+<form
+  method="POST"
+  action=" {{ url_for('file') }}"
+  enctype="multipart/form-data"
+>
+  <input type="file" name="file" accept=".txt, .docx, .xlsx" />
+  <input type="submit" value="Upload" />
+</form>
+
+<h1>Convert to CSV</h1>
+<form
+  method="POST"
+  action=" {{ url_for('convert_to_csv') }}"
+  enctype="multipart/form-data"
+>
+  <input type="file" name="file" accept=".xlsx" />
+  <input type="submit" value="Upload" />
+</form>
+
+<h1>Convert to CSV Two</h1>
+<form
+  method="POST"
+  action=" {{ url_for('convert_to_csv_two') }}"
+  enctype="multipart/form-data"
+>
+  <input type="file" name="file" accept=".xlsx" />
+  <input type="submit" value="Upload" />
+</form>
+
+<h1>JavaScript JSON Request</h1>
+<button id="post_btn">Send POST Request</button>
+
+<script>
+  const post_btn = document.getElementById("post_btn");
+  const json_data = { name: "Mayuresh", greeting: "Hello" };
+
+  post_btn.addEventListener("click", () => {
+    fetch('{{ url_for("handle_post_js")}}', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(json_data),
+    })
+      .then((respone) => respone.json())
+      .then((data) => console.log("Success:", data))
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  });
+</script>
+{% endblock content %}
