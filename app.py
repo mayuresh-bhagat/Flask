@@ -1,4 +1,4 @@
-from flask import Flask, Response, request, render_template, session, make_response
+from flask import Flask, Response, request, render_template, session, make_response, flash
 
 app = Flask(__name__, template_folder="templates")
 app.secret_key = "SECRET KEY"
@@ -53,6 +53,27 @@ def delete_cookies():
     response.set_cookie('age', expires=0)
     return response
 
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    elif request.method == 'POST':
+        
+        if 'username' in request.form.keys() and 'password' in request.form.keys():
+            username = request.form.get('username')
+            password = request.form.get('password')
+
+            if username == "mayuresh" and password == "123456":
+                flash('Login Scuccessful')
+                return render_template('index.html')
+            else :
+                flash('Invalid Credentials')
+                return render_template('login.html')
+        else :
+            flash('Invalid Request')
+            return render_template('login.html')
+        
 
 if __name__ == "__main__":
     app.run(debug=True)
