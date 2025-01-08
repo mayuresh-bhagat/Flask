@@ -2,6 +2,20 @@
 block content %}
 <h1>Index Page</h1>
 
+{% if current_user.is_authenticated %}
+<h3>Hello, {{ current_user.username }}!</h3>
+{% else %}
+<h3>Hello!</h3>
+{% endif %}
+
+<a href="{{ url_for('signup') }}">Sign Up</a>
+<a href="{{ url_for('login') }}">Login</a>
+<a href="{{ url_for('logout') }}">Log Out</a>
+<a href="{{ url_for('secret') }}">Secret</a>
+
+{% endblock content %}
+<!--
+DB Application
 <h1>Create New Person</h1>
 <form action="{{ url_for('index') }}" method="POST">
   <input type="text" name="name" placeholder="Name" />
@@ -58,4 +72,4 @@ block content %}
       });
   }
 </script>
-{% endblock content %}
+-->
