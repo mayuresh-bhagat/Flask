@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% block title %}Index Page{% endblock title %} {%
+block content %}
+<h1>Index Page</h1>
+
+<h1>Create New Person</h1>
+<form action="{{ url_for('index') }}" method="POST">
+  <input type="text" name="name" placeholder="Name" />
+  <input type="number" name="age" placeholder="age" />
+  <input type="text" name="job" placeholder="Job" />
+  <button type="submit">Create</button>
+</form>
+
+<h1>Persons</h1>
+<table border="1">
+  <thead>
+    <tr>
+      <th>PID</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Job</th>
+      <th colspan="2">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for person in Persons %}
+    <tr>
+      <td>{{ person.pid }}</td>
+      <td>{{ person.name }}</td>
+      <td>{{ person.age }}</td>
+      <td>{{ person.job }}</td>
+      <td>
+        <a href="{{ url_for('details', pid=person.pid) }}">Detail</a>
+      </td>
+      <td>
+        <button type="button" onclick="delete_person({{ person.pid }})">
+          Delete
+        </button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+  function delete_person(pid) {
+    fetch('{{ url_for("delete", pid=pid) }}' + pid, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          console.error("Failed to delete the person");
+        }
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  }
+</script>
+{% endblock content %}
